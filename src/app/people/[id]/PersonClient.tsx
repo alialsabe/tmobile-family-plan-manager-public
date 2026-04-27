@@ -152,19 +152,6 @@ export default function PersonClient({ personId }: { personId: string }) {
               ))}
             </div>
 
-            {personInBill && personInBill.evidence.length > 0 && (
-              <details className="mt-4 rounded-2xl border border-white/[0.08] bg-black/18 p-4 text-sm text-[#9aa0ad]">
-                <summary className="cursor-pointer font-medium text-[#d9dce5]">Bill evidence</summary>
-                <ul className="mt-3 space-y-2 leading-6">
-                  {personInBill.evidence.map((item, i) => (
-                    <li key={i} className="flex gap-2">
-                      <span className="text-[#e20074]">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            )}
           </div>
 
           <section className="rounded-[30px] border border-white/[0.08] bg-[#101116] p-5 shadow-2xl shadow-black/30">
