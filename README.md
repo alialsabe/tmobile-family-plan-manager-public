@@ -1,11 +1,9 @@
-# T-Mobile Family Plan Manager — Public Demo
+# T-Mobile Family Plan Manager
 
-This is a sanitized public deployment repo for the T-Mobile family-plan manager UI.
+Public deployment repo for the family plan manager UI.
 
-Important privacy note:
-- This public repo does not include real T-Mobile PDFs.
-- This public repo does not include real phone numbers.
-- This public repo does not include real customer names.
-- This public repo uses synthetic sample billing data only.
-
-The private repo/local workspace can keep the real bill extraction data separately.
+Privacy note:
+- Real names and phone lines are intentionally displayed in the app after login.
+- Raw T-Mobile bill PDFs are intentionally not committed to this public repository.
+- Extracted PDF/source bill files should stay outside this repo.
+- The live site is protected by an app-level password stored as an encrypted Vercel environment variable.

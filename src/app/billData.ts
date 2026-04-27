@@ -46,90 +46,2256 @@ export type ManualAdjustment = {
   amount: number;
 };
 
-const roster = [
-  { id: "person-1", name: "Person 1", line: "(555) 010-1001" },
-  { id: "person-2", name: "Person 2", line: "(555) 010-1002" },
-  { id: "person-3", name: "Person 3", line: "(555) 010-1003" },
-  { id: "person-4", name: "Person 4", line: "(555) 010-1004" },
-  { id: "person-5", name: "Person 5", line: "(555) 010-1005" },
-  { id: "person-6", name: "Person 6", line: "(555) 010-1006" },
-  { id: "person-7", name: "Person 7", line: "(555) 010-1007" },
-  { id: "person-8", name: "Person 8", line: "(555) 010-1008" },
-];
-
-const monthSpecs = [
-  ["2026-04", "April 2026", "Apr 14, 2026", "May 07, 2026"],
-  ["2026-03", "March 2026", "Mar 14, 2026", "Apr 07, 2026"],
-  ["2026-02", "February 2026", "Feb 14, 2026", "Mar 07, 2026"],
-  ["2026-01", "January 2026", "Jan 14, 2026", "Feb 07, 2026"],
-  ["2025-12", "December 2025", "Dec 14, 2025", "Jan 07, 2026"],
-  ["2025-11", "November 2025", "Nov 14, 2025", "Dec 07, 2025"],
-  ["2025-10", "October 2025", "Oct 14, 2025", "Nov 07, 2025"],
-  ["2025-09", "September 2025", "Sep 14, 2025", "Oct 07, 2025"],
-  ["2025-08", "August 2025", "Aug 14, 2025", "Sep 07, 2025"],
-  ["2025-07", "July 2025", "Jul 14, 2025", "Aug 07, 2025"],
-  ["2025-06", "June 2025", "Jun 14, 2025", "Jul 07, 2025"],
-  ["2025-05", "May 2025", "May 14, 2025", "Jun 07, 2025"],
-  ["2025-04", "April 2025", "Apr 14, 2025", "May 07, 2025"],
-  ["2025-03", "March 2025", "Mar 14, 2025", "Apr 07, 2025"],
-  ["2025-02", "February 2025", "Feb 14, 2025", "Mar 07, 2025"],
-  ["2025-01", "January 2025", "Jan 14, 2025", "Feb 07, 2025"],
-];
-
-function makePerson(person: (typeof roster)[number], monthIndex: number, personIndex: number): PersonBill {
-  const internationalFees = personIndex === 5 ? [24.32, 0, 24.42, 0][monthIndex % 4] : personIndex === 0 ? [0, 55.12, 57.98, 0][monthIndex % 4] : personIndex === 4 ? [7.69, 0, 0, 0][monthIndex % 4] : 0;
-  const devicePayment = personIndex === 5 ? 21.45 : 0;
-  const otherFees = personIndex === 6 && monthIndex % 5 === 0 ? 1.08 : 0;
-
-  return {
-    ...person,
-    type: "Voice",
-    base: 46.4,
-    internationalFees,
-    devicePayment,
-    otherFees,
-    note: internationalFees || devicePayment || otherFees ? "Sample extra charges for public demo data." : "No extra demo charge for this bill.",
-    evidence: [
-      "Sanitized sample data: no real bill PDF, account number, customer name, or real phone number is included in this public repository.",
-    ],
-  };
-}
-
-export const bills: BillRecord[] = monthSpecs.map(([id, label, issueDate, dueDate], monthIndex) => {
-  const people = roster.map((person, personIndex) => makePerson(person, monthIndex, personIndex));
-  const collectionTotal = roundMoney(people.reduce((sum, person) => sum + getPersonTotal(person), 0));
-  const needsReviewAmount = roundMoney(150 + (monthIndex % 4) * 12.5);
-
-  return {
-    id,
-    label,
-    issueDate,
-    dueDate,
-    currentCharges: collectionTotal,
-    pastDue: monthIndex % 5 === 0 ? 100 : 0,
-    totalDue: roundMoney(collectionTotal + (monthIndex % 5 === 0 ? 100 : 0)),
-    basePerPerson: 46.4,
-    sourcePdf: "sanitized-demo-no-raw-pdf.pdf",
-    people,
-    needsReview: [
+export const bills: BillRecord[] = [
+  {
+    "id": "2026-04",
+    "label": "April 2026",
+    "issueDate": "Apr 14, 2026",
+    "dueDate": "May 07, 2026",
+    "currentCharges": 481.13,
+    "pastDue": 446.67,
+    "totalDue": 927.8,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillApr2026.pdf",
+    "people": [
       {
-        item: "Sample account-level item",
-        line: "Account",
-        amount: needsReviewAmount,
-        decision: "Sanitized demo placeholder; private allocations stay outside this public repository.",
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
       },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 7.69,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $7.69, T-Mobile total $47.69",
+          "Page 2 summary: line-specific one-time/usage charge $7.69"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 24.32,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $21.45, services $0.00, one-time $24.32, T-Mobile total $85.77",
+          "Page 2 summary: line-specific one-time/usage charge $24.32",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 1.08,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $1.08, T-Mobile total $41.08",
+          "Page 2 summary: line-specific one-time/usage charge $1.08"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
     ],
-  };
-});
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 184.49,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 42.1,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Past due balance",
+        "line": "Account",
+        "amount": 446.67,
+        "decision": "Do not allocate until payment history is known"
+      }
+    ]
+  },
+  {
+    "id": "2026-03",
+    "label": "March 2026",
+    "issueDate": "Mar 14, 2026",
+    "dueDate": "Apr 07, 2026",
+    "currentCharges": 446.67,
+    "pastDue": 0.0,
+    "totalDue": 446.67,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillMar2026.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 55.12,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $55.12, T-Mobile total $55.12",
+          "Page 2 summary: line-specific one-time/usage charge $55.12"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $0.00, T-Mobile total $56.45",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 153.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 42.1,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2026-02",
+    "label": "February 2026",
+    "issueDate": "Feb 14, 2026",
+    "dueDate": "Mar 07, 2026",
+    "currentCharges": 529.5,
+    "pastDue": 210.6,
+    "totalDue": 740.1,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillFeb2026.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 57.98,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $57.98, T-Mobile total $57.98",
+          "Page 2 summary: line-specific one-time/usage charge $57.98"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 1.45,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $1.45, T-Mobile total $41.45",
+          "Page 2 summary: line-specific one-time/usage charge $1.45"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 24.42,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $21.45, services $0.00, one-time $24.42, T-Mobile total $85.87",
+          "Page 2 summary: line-specific one-time/usage charge $24.42",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 182.1,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 42.1,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Past due balance",
+        "line": "Account",
+        "amount": 210.6,
+        "decision": "Do not allocate until payment history is known"
+      }
+    ]
+  },
+  {
+    "id": "2026-01",
+    "label": "January 2026",
+    "issueDate": "Jan 14, 2026",
+    "dueDate": "Feb 07, 2026",
+    "currentCharges": 421.19,
+    "pastDue": 0.0,
+    "totalDue": 421.19,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillJan2026.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.82,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $14.82, services $0.00, one-time $0.00, T-Mobile total $49.82",
+          "Page 2 summary: line-specific equipment charge $14.82"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 13.68,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $13.68, T-Mobile total $48.68",
+          "Page 2 summary: line-specific one-time/usage charge $13.68"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 1.37,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $1.37, T-Mobile total $57.82",
+          "Page 2 summary: line-specific one-time/usage charge $1.37",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.27,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.27, T-Mobile total $35.27",
+          "Page 2 summary: line-specific one-time/usage charge $0.27"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 153.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 41.6,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2025-12",
+    "label": "December 2025",
+    "issueDate": "Dec 14, 2025",
+    "dueDate": "Jan 07, 2026",
+    "currentCharges": 421.32,
+    "pastDue": 0.0,
+    "totalDue": 401.15,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillDec2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 2.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $2.00, T-Mobile total $2.00",
+          "Page 2 summary: line-specific one-time/usage charge $2.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $49.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 13.01,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $13.01, T-Mobile total $48.01",
+          "Page 2 summary: line-specific one-time/usage charge $13.01"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 3.47,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $3.47, T-Mobile total $59.92",
+          "Page 2 summary: line-specific one-time/usage charge $3.47",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 150.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 41.6,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2025-11",
+    "label": "November 2025",
+    "issueDate": "Nov 14, 2025",
+    "dueDate": "Dec 07, 2025",
+    "currentCharges": 458.55,
+    "pastDue": 439.57,
+    "totalDue": 898.12,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillNov2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.54,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.54, T-Mobile total $0.54",
+          "Page 2 summary: line-specific one-time/usage charge $0.54"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $54.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $21.45, services $0.00, one-time $0.00, T-Mobile total $61.45",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 180.17,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 41.6,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Past due balance",
+        "line": "Account",
+        "amount": 439.57,
+        "decision": "Do not allocate until payment history is known"
+      }
+    ]
+  },
+  {
+    "id": "2025-10",
+    "label": "October 2025",
+    "issueDate": "Oct 14, 2025",
+    "dueDate": "Nov 07, 2025",
+    "currentCharges": 439.57,
+    "pastDue": 0.0,
+    "totalDue": 439.57,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillOct2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $54.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.57,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.57, T-Mobile total $40.57",
+          "Page 2 summary: line-specific one-time/usage charge $0.57"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 1.16,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $1.16, T-Mobile total $41.16",
+          "Page 2 summary: line-specific one-time/usage charge $1.16"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $21.45, services $0.00, one-time $0.00, T-Mobile total $61.45",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 160.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 41.6,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2025-09",
+    "label": "September 2025",
+    "issueDate": "Sep 14, 2025",
+    "dueDate": "Oct 07, 2025",
+    "currentCharges": 477.24,
+    "pastDue": 483.08,
+    "totalDue": 960.32,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillSep2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $54.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.57,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.57, T-Mobile total $40.57",
+          "Page 2 summary: line-specific one-time/usage charge $0.57"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 3.44,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $3.44, T-Mobile total $43.44",
+          "Page 2 summary: line-specific one-time/usage charge $3.44"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $21.45, services $0.00, one-time $0.00, T-Mobile total $61.45",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 181.99,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 55.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Past due balance",
+        "line": "Account",
+        "amount": 483.08,
+        "decision": "Do not allocate until payment history is known"
+      }
+    ]
+  },
+  {
+    "id": "2025-08",
+    "label": "August 2025",
+    "issueDate": "Aug 14, 2025",
+    "dueDate": "Sep 07, 2025",
+    "currentCharges": 481.69,
+    "pastDue": 10.24,
+    "totalDue": 491.93,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillAug2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.57,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.57, T-Mobile total $0.57",
+          "Page 2 summary: line-specific one-time/usage charge $0.57"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $54.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $40.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 7.69,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $7.69, T-Mobile total $47.69",
+          "Page 2 summary: line-specific one-time/usage charge $7.69"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 8.44,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $21.45, services $0.00, one-time $8.44, T-Mobile total $69.89",
+          "Page 2 summary: line-specific one-time/usage charge $8.44",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 6.75,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $40.00, equipment $0.00, services $0.00, one-time $6.75, T-Mobile total $46.75",
+          "Page 2 summary: line-specific one-time/usage charge $6.75"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 167.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 55.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Past due balance",
+        "line": "Account",
+        "amount": 10.24,
+        "decision": "Do not allocate until payment history is known"
+      }
+    ]
+  },
+  {
+    "id": "2025-07",
+    "label": "July 2025",
+    "issueDate": "Jul 14, 2025",
+    "dueDate": "Aug 07, 2025",
+    "currentCharges": 430.24,
+    "pastDue": 0.0,
+    "totalDue": 430.24,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillJul2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $49.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 7.08,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $7.08, T-Mobile total $42.08",
+          "Page 2 summary: line-specific one-time/usage charge $7.08"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $0.00, T-Mobile total $56.45",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 6.92,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $6.92, T-Mobile total $41.92",
+          "Page 2 summary: line-specific one-time/usage charge $6.92"
+        ]
+      },
+      {
+        "id": "6194503199",
+        "name": "Unassigned",
+        "line": "(619) 450-3199",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 150.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 55.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2025-06",
+    "label": "June 2025",
+    "issueDate": "Jun 14, 2025",
+    "dueDate": "Jul 07, 2025",
+    "currentCharges": 515.82,
+    "pastDue": 0.0,
+    "totalDue": 515.82,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillJun2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $49.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 57.59,
+        "devicePayment": 16.9,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $16.90, services $0.00, one-time $57.59, T-Mobile total $109.49",
+          "Page 2 summary: line-specific one-time/usage charge $57.59",
+          "Page 2 summary: line-specific equipment charge $16.90"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $0.00, T-Mobile total $56.45",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 25.09,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $25.09, T-Mobile total $60.09",
+          "Page 2 summary: line-specific one-time/usage charge $25.09"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 150.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 55.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2025-05",
+    "label": "May 2025",
+    "issueDate": "May 14, 2025",
+    "dueDate": "Jun 07, 2025",
+    "currentCharges": 437.19,
+    "pastDue": 0.0,
+    "totalDue": 437.19,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillMay2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $49.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 3.15,
+        "devicePayment": 16.9,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $16.90, services $0.00, one-time $3.15, T-Mobile total $55.05",
+          "Page 2 summary: line-specific one-time/usage charge $3.15",
+          "Page 2 summary: line-specific equipment charge $16.90"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $0.00, T-Mobile total $56.45",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 5.9,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $5.90, T-Mobile total $40.90",
+          "Page 2 summary: line-specific one-time/usage charge $5.90"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 150.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 50.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2025-04",
+    "label": "April 2025",
+    "issueDate": "Apr 14, 2025",
+    "dueDate": "May 07, 2025",
+    "currentCharges": 432.11,
+    "pastDue": 0.0,
+    "totalDue": 432.11,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillApr2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $49.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 16.9,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $16.90, services $0.00, one-time $0.00, T-Mobile total $51.90",
+          "Page 2 summary: line-specific equipment charge $16.90"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 3.44,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $3.44, T-Mobile total $59.89",
+          "Page 2 summary: line-specific one-time/usage charge $3.44",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.53,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.53, T-Mobile total $35.53",
+          "Page 2 summary: line-specific one-time/usage charge $0.53"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 150.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 50.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2025-03",
+    "label": "March 2025",
+    "issueDate": "Mar 14, 2025",
+    "dueDate": "Apr 07, 2025",
+    "currentCharges": 431.58,
+    "pastDue": 0.0,
+    "totalDue": 431.58,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillMar2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $49.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 16.9,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $16.90, services $0.00, one-time $0.00, T-Mobile total $51.90",
+          "Page 2 summary: line-specific equipment charge $16.90"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 3.44,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $3.44, T-Mobile total $59.89",
+          "Page 2 summary: line-specific one-time/usage charge $3.44",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 150.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 50.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2025-02",
+    "label": "February 2025",
+    "issueDate": "Feb 14, 2025",
+    "dueDate": "Mar 07, 2025",
+    "currentCharges": 431.35,
+    "pastDue": 0.0,
+    "totalDue": 431.35,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillFeb2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $49.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 16.9,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $16.90, services $0.00, one-time $0.00, T-Mobile total $51.90",
+          "Page 2 summary: line-specific equipment charge $16.90"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $0.00, T-Mobile total $56.45",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 3.21,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $3.21, T-Mobile total $38.21",
+          "Page 2 summary: line-specific one-time/usage charge $3.21"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 150.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 50.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  },
+  {
+    "id": "2025-01",
+    "label": "January 2025",
+    "issueDate": "Jan 14, 2025",
+    "dueDate": "Feb 07, 2025",
+    "currentCharges": 413.53,
+    "pastDue": 0.0,
+    "totalDue": 413.53,
+    "basePerPerson": 46.4,
+    "sourcePdf": "data/bills/DetailedBillJan2025.pdf",
+    "people": [
+      {
+        "id": "4153163282",
+        "name": "Fares",
+        "line": "(415) 316-3282",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "4154254426",
+        "name": "Hamza",
+        "line": "(415) 425-4426",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $0.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $0.00"
+        ]
+      },
+      {
+        "id": "5107177163",
+        "name": "Ali",
+        "line": "(510) 717-7163",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 14.79,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $14.79, services $0.00, one-time $0.00, T-Mobile total $49.79",
+          "Page 2 summary: line-specific equipment charge $14.79"
+        ]
+      },
+      {
+        "id": "8586665305",
+        "name": "Nick",
+        "line": "(858) 666-5305",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "4159904154",
+        "name": "Kareem",
+        "line": "(415) 990-4154",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      },
+      {
+        "id": "7604122708",
+        "name": "Johannes",
+        "line": "(760) 412-2708",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 2.29,
+        "devicePayment": 21.45,
+        "otherFees": 0.0,
+        "note": "Base share plus line-specific extras from bill summary.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $21.45, services $0.00, one-time $2.29, T-Mobile total $58.74",
+          "Page 2 summary: line-specific one-time/usage charge $2.29",
+          "Page 2 summary: line-specific equipment charge $21.45"
+        ]
+      },
+      {
+        "id": "9174005616",
+        "name": "Diana",
+        "line": "(917) 400-5616",
+        "type": "Voice",
+        "base": 46.4,
+        "internationalFees": 0.0,
+        "devicePayment": 0.0,
+        "otherFees": 0.0,
+        "note": "No extra charge found on this bill.",
+        "evidence": [
+          "Page 2 summary: plan $35.00, equipment $0.00, services $0.00, one-time $0.00, T-Mobile total $35.00"
+        ]
+      }
+    ],
+    "needsReview": [
+      {
+        "item": "Account",
+        "line": "Account",
+        "amount": 150.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      },
+      {
+        "item": "Mobile Internet",
+        "line": "(442) 354-4556",
+        "amount": 50.0,
+        "decision": "Unallocated: assign owner/split/ignore after review"
+      }
+    ]
+  }
+];
 
 export const activeBill = bills[0];
+export const bill = activeBill;
 export const people = activeBill.people;
+export const needsReview = activeBill.needsReview;
 
 export function getPersonTotal(person: PersonBill) {
   return roundMoney(person.base + person.internationalFees + person.devicePayment + person.otherFees);
 }
 
-export function getManualAdjustmentTotal(billId: string, personId: string, adjustments: ManualAdjustment[] = []) {
+export function getManualAdjustmentTotal(billId: string, personId: string, adjustments: ManualAdjustment[]) {
   return roundMoney(
     adjustments
       .filter((adjustment) => adjustment.billId === billId && adjustment.personId === personId)
@@ -169,20 +2335,31 @@ export function calculatePersonRangeBreakdown(
   endBillId: string,
   adjustments: ManualAdjustment[] = [],
 ) {
-  const totals = getBillsInRange(allBills, startBillId, endBillId).reduce(
+  const rangeBills = getBillsInRange(allBills, startBillId, endBillId);
+  const totals = rangeBills.reduce(
     (sum, billRecord) => {
       const person = billRecord.people.find((row) => row.id === personId);
       if (!person) return sum;
+
+      const adjustmentTotal = getManualAdjustmentTotal(billRecord.id, personId, adjustments);
+
       return {
         billCount: sum.billCount + 1,
         base: sum.base + person.base,
         internationalFees: sum.internationalFees + person.internationalFees,
         devicePayment: sum.devicePayment + person.devicePayment,
         otherFees: sum.otherFees + person.otherFees,
-        adjustments: sum.adjustments + getManualAdjustmentTotal(billRecord.id, personId, adjustments),
+        adjustments: sum.adjustments + adjustmentTotal,
       };
     },
-    { billCount: 0, base: 0, internationalFees: 0, devicePayment: 0, otherFees: 0, adjustments: 0 },
+    {
+      billCount: 0,
+      base: 0,
+      internationalFees: 0,
+      devicePayment: 0,
+      otherFees: 0,
+      adjustments: 0,
+    },
   );
 
   const rounded = {
@@ -196,7 +2373,13 @@ export function calculatePersonRangeBreakdown(
 
   return {
     ...rounded,
-    total: roundMoney(rounded.base + rounded.internationalFees + rounded.devicePayment + rounded.otherFees + rounded.adjustments),
+    total: roundMoney(
+      rounded.base +
+        rounded.internationalFees +
+        rounded.devicePayment +
+        rounded.otherFees +
+        rounded.adjustments,
+    ),
   };
 }
 
@@ -207,7 +2390,12 @@ export function calculatePersonRangeTotal(
   endBillId: string,
   adjustments: ManualAdjustment[] = [],
 ) {
-  return calculatePersonRangeBreakdown(allBills, personId, startBillId, endBillId, adjustments).total;
+  return roundMoney(
+    getBillsInRange(allBills, startBillId, endBillId).reduce((sum, billRecord) => {
+      const person = billRecord.people.find((row) => row.id === personId);
+      return sum + (person ? calculatePersonTotalWithAdjustments(billRecord.id, person, adjustments) : 0);
+    }, 0),
+  );
 }
 
 export function getAccountPrivateMetrics(billRecord: BillRecord) {
