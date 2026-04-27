@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   bills,
@@ -65,9 +66,9 @@ export default function PersonClient({ personId }: { personId: string }) {
         <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-5 py-8 md:px-8 lg:px-10">
           <div className="rounded-[28px] border border-rose-300/20 bg-rose-950/20 p-8 text-center">
             <h1 className="text-2xl font-semibold text-white">Person not found</h1>
-            <a href="/" className="mt-4 inline-block text-[#e20074] hover:underline">
+            <Link href="/" className="mt-4 inline-block text-[#e20074] hover:underline">
               Back to people list
-            </a>
+            </Link>
           </div>
         </section>
       </main>
@@ -78,12 +79,12 @@ export default function PersonClient({ personId }: { personId: string }) {
     <main className="min-h-screen overflow-hidden bg-[#07080b] text-white">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_16%_0%,rgba(226,0,116,0.20),transparent_34rem),radial-gradient(circle_at_85%_8%,rgba(113,112,255,0.18),transparent_30rem),linear-gradient(180deg,#07080b_0%,#0c0d12_100%)]" />
       <section className="relative mx-auto flex w-full max-w-7xl flex-col gap-7 px-5 py-7 md:px-8 lg:px-10">
-        <a
+        <Link
           href="/"
           className="inline-flex w-fit items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-2 text-sm text-[#a9adb8] transition hover:border-white/[0.18] hover:text-white"
         >
           ← All people
-        </a>
+        </Link>
 
         <header className="overflow-hidden rounded-[34px] border border-white/[0.08] bg-white/[0.045] shadow-2xl shadow-black/40 backdrop-blur">
           <div className="h-1.5 bg-gradient-to-r from-[#e20074] via-[#8f7cff] to-[#16d9a3]" />
@@ -152,6 +153,19 @@ export default function PersonClient({ personId }: { personId: string }) {
               ))}
             </div>
 
+            {personInBill && personInBill.evidence.length > 0 && (
+              <details className="mt-4 rounded-2xl border border-white/[0.08] bg-black/18 p-4 text-sm text-[#9aa0ad]">
+                <summary className="cursor-pointer font-medium text-[#d9dce5]">Bill evidence</summary>
+                <ul className="mt-3 space-y-2 leading-6">
+                  {personInBill.evidence.map((item, i) => (
+                    <li key={i} className="flex gap-2">
+                      <span className="text-[#e20074]">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
           </div>
 
           <section className="rounded-[30px] border border-white/[0.08] bg-[#101116] p-5 shadow-2xl shadow-black/30">

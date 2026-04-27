@@ -7,26 +7,13 @@ export default function Home() {
       <section className="relative mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 py-8 md:px-8 lg:px-10">
         <header className="overflow-hidden rounded-[34px] border border-white/[0.08] bg-white/[0.045] shadow-2xl shadow-black/40 backdrop-blur">
           <div className="h-1.5 bg-gradient-to-r from-[#e20074] via-[#8f7cff] to-[#16d9a3]" />
-          <div className="grid gap-8 p-7 md:p-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
-            <div>
-              <p className="mb-5 inline-flex rounded-full border border-white/[0.1] bg-white/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-[#a9adb8]">
-                T-Mobile family plan
-              </p>
-              <h1 className="max-w-4xl text-5xl font-semibold leading-[0.92] tracking-[-0.07em] text-white md:text-7xl">
-                Pick a person. Keep the money clean.
-              </h1>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-[#a9adb8] md:text-lg">
-                This public page is only a directory. Amounts live on each person&apos;s page so the home screen does not expose balances.
-              </p>
-            </div>
-            <div className="rounded-3xl border border-white/[0.08] bg-black/25 p-5">
-              <p className="text-sm font-medium text-[#d9dce5]">What happens next</p>
-              <div className="mt-4 space-y-3 text-sm leading-6 text-[#9aa0ad]">
-                <p>1. Choose your name.</p>
-                <p>2. Select the months you want.</p>
-                <p>3. See base, international, device, and total owed.</p>
-              </div>
-            </div>
+          <div className="p-7 md:p-10">
+            <p className="mb-5 inline-flex rounded-full border border-white/[0.1] bg-white/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-[#a9adb8]">
+              You can explore previous bills
+            </p>
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.92] tracking-[-0.07em] text-white md:text-7xl">
+              Click on your name to see your balance.
+            </h1>
           </div>
         </header>
 

@@ -8,7 +8,10 @@ export async function hashPassword(password: string) {
     .join("");
 }
 
-export async function isAuthenticatedCookieValue(cookieValue: string | null | undefined, expectedPassword: string | undefined) {
+export async function isAuthenticatedCookieValue(
+  cookieValue: string | null | undefined,
+  expectedPassword: string | undefined,
+) {
   if (!cookieValue || !expectedPassword) return false;
   return cookieValue === (await hashPassword(expectedPassword));
 }
